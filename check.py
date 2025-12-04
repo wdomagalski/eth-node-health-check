@@ -23,16 +23,27 @@ def ping(host):
         return None
 
 def rpc_check(url):
+    payload = {
+        "jsonrpc": "2.0",
+        "method": "eth_blockNumber",
+        "params": [],
+        "id": 1
+    }
+
     try:
-        payload = {
-            "jsonrpc": "2.0",
-            "method": "eth_blockNumber",
-            "params": [],
-            "id": 1
-        }
-        r = requests.post(url, json=payload, timeout=2)
-        return r.ok
-    except:
+        r = requests.post(url, json=payload, timeout=3)
+        data = r.json()
+
+        # If RPC returned an error, just fail quietly
+        if "error" in data:
+            print("RPC error:", data["error"].get("message"))
+            return False
+
+        return "result" in data
+
+    except requests.exceptions.RequestException:
+        return False
+    except ValueError:
         return False
 
 if __name__ == "__main__":
