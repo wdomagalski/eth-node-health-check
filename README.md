@@ -14,20 +14,20 @@ I mainly wrote it to practice and to have a small public project on GitHub.
 
 ## How to run
 
-```Python
+```bash
 pip install -r requirements.txt
 python3 check.py --host 8.8.8.8 --rpc https://cloudflare-eth.com
 ```
 
 Or without RPC:
 
-```Python
+```bash
 python3 check.py
 ```
 
 ## Docker
 
-```Python
+```bash
 docker build -t node-health .
 docker run -–rm node-health
 ```
